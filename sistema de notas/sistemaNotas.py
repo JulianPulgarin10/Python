@@ -163,4 +163,5 @@ def menu_principal():
 
 # Ejecución del programa
 if __name__ == "__main__":
+    input("Presiona Enter para iniciar...")
     menu_principal()
