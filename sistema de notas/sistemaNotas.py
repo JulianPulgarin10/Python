@@ -66,6 +66,7 @@ def menu_profesor():
         else:
             print("Opción no válida. Intente de nuevo.")
 
+
 # Agregar nota a un estudiante
 def agregar_nota():
     estudiante = input("Ingrese el nombre del estudiante: ")
@@ -73,12 +74,16 @@ def agregar_nota():
         print("El estudiante no está registrado.")
         return
     materia = input("Ingrese la materia: ")
-    try:
-        nota = float(input("Ingrese la nota: "))
-        notas[estudiante].setdefault(materia, []).append(nota)
-        print("Nota agregada correctamente.")
-    except ValueError:
-        print("Nota inválida. Asegúrese de ingresar un número.")
+    while True:
+        try:
+            nota = float(input("Ingrese una nota (o escriba -1 para finalizar): "))
+            if nota == -1:
+                break
+            notas[estudiante].setdefault(materia, []).append(nota)
+            print("Nota agregada correctamente.")
+        except ValueError:
+            print("Nota inválida. Asegúrese de ingresar un número.")
+
 
 # Ver notas de todos los estudiantes
 def ver_notas_estudiantes():
@@ -163,5 +168,4 @@ def menu_principal():
 
 # Ejecución del programa
 if __name__ == "__main__":
-    input("Presiona Enter para iniciar...")
     menu_principal()
