@@ -38,16 +38,58 @@ def menu_admin():
     while True:
         print("\n===== MENÚ ADMINISTRADOR =====")
         print("1. Ver usuarios registrados")
-        print("2. Volver al menú principal")
+        print("2. Editar tipo de usuario")
+        print("3. Eliminar usuario")
+        print("4. Ver historial de notas de un estudiante")
+        print("5. Volver al menú principal")
         opcion = input("Seleccione una opción: ")
+        
         if opcion == "1":
             print("\nUsuarios registrados:")
             for usuario, data in usuarios.items():
                 print(f"Usuario: {usuario}, Tipo: {data['tipo']}")
+        
         elif opcion == "2":
+            usuario = input("Ingrese el nombre del usuario a editar: ")
+            if usuario in usuarios:
+                nuevo_tipo = seleccionar_tipo_usuario()
+                if nuevo_tipo:
+                    usuarios[usuario]["tipo"] = nuevo_tipo
+                    print("Tipo de usuario actualizado.")
+                else:
+                    print("Tipo no válido.")
+            else:
+                print("Usuario no encontrado.")
+        
+        elif opcion == "3":
+            usuario = input("Ingrese el nombre del usuario a eliminar: ")
+            if usuario in usuarios:
+                confirmacion = input(f"¿Está seguro de eliminar al usuario '{usuario}'? (s/n): ").lower()
+                if confirmacion == "s":
+                    usuarios.pop(usuario)
+                    notas.pop(usuario, None)
+                    print("Usuario eliminado.")
+                else:
+                    print("Operación cancelada.")
+            else:
+                print("Usuario no encontrado.")
+        
+        elif opcion == "4":
+            estudiante = input("Ingrese el nombre del estudiante: ")
+            if estudiante in notas:
+                print(f"\nHistorial de notas de {estudiante}:")
+                for materia, calificaciones in notas[estudiante].items():
+                    promedio = calcular_promedio(calificaciones)
+                    print(f"  {materia}: {calificaciones} - Promedio: {promedio}")
+            else:
+                print("Estudiante no encontrado o no tiene notas registradas.")
+        
+        elif opcion == "5":
             break
+        
         else:
             print("Opción no válida. Intente de nuevo.")
+
 
 # Menú del profesor
 def menu_profesor():
